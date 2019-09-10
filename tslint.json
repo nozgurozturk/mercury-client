@@ -1,0 +1,27 @@
+{
+    "defaultSeverity": "error",
+    "compilerOptions": {
+        "plugins": [
+          { "name": "typescript-tslint-plugin" }
+        ]
+      },
+    "extends": [
+        "tslint-react"
+    ],
+    "jsRules": {},
+    "rules": {
+        "member-access":false,
+        "ordered-imports": false,
+        "quotemark": false,
+        "no-console": false,
+        "semicolon": false,
+        "jsx-no-lambda": false
+    },
+    "rulesDirectory": [],
+    "linterOptions":{
+        "exclude":[
+            "config/**/*.js",
+            "node_modules/**/*.ts"
+        ]
+    }
+}
