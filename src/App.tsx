@@ -1,17 +1,43 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { SPTheme } from "./utils/styles/SPTheme";
 
 import { Title } from './components/Title';
+import { List } from './components/List';
 
+const AppContainer = styled.main`
+    max-width:960px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+`;
+
+const InnerContainer = styled.section` 
+    display:flex; 
+    flex-direction:column;
+    justify-content:space-between;
+`;
+
+const PGContainer = styled.div`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+`
+
+const LinksContainer = styled.div`
+    display:flex; 
+    flex-direction:column;
+    justify-content:space-between;
+    flex-wrap:wrap;
+
+`;
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={SPTheme}>
-      <div>
-        <Title title="projects" />
-        <Title title="guide and rules" />
-      </div>
+      <AppContainer>
+          <></>
+      </AppContainer>
     </ThemeProvider>
   );
 }
