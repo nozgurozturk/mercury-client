@@ -5,7 +5,7 @@ const SPTheme: DefaultTheme = {
     colors: {
         black: "#2B3039",
         white: "#F4F4F4",
-        red: "FF5847"
+        red: "#FF5847"
       },
       fontSize : {
         title : "36px",
