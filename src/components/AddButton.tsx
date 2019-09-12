@@ -6,14 +6,15 @@ type ButtonState = {
 }
 
 const ButtonContainer = styled.div<ButtonState>`
-    margin-top:16px;
-    align-self: flex-end;
-    width:${props => !props.isExpand ? "40px" : "240px"};
+    position:absolute;
+    top:0;
+    right:0;
+    width:${props => !props.isExpand ? "40px" : "220px"};
     height:${props => !props.isExpand ? "40px" : "100px"};
     background-color:${props => props.theme.colors.white};
     border:${props => props.theme.border.bold};
     box-shadow:${props => !props.isExpand ? props.theme.shadow.normal : props.theme.shadow.big};
-    padding:${props => !props.isExpand ? "0px" : "10px"};
+
     transition:600ms;
     &:hover{
         box-shadow:${props => props.theme.shadow.pressed};
@@ -37,8 +38,8 @@ const FormInput = styled.input`
   border-left: none !important;
   border-right: none !important;
   border-bottom: 1px solid ${props => props.theme.colors.black};
-  padding-bottom: 2px;
-  margin-bottom: 20px;
+  padding:0px 8px;
+  margin: 8px 0px;
   border-radius: 0;
   -webkit-appearance: none;
   color:${props => props.theme.colors.black};
@@ -50,6 +51,9 @@ const FormInput = styled.input`
   :visited,
   :active & {
     outline: none;
+  }
+  &::placeholder{
+    text-indent:10px;
   }
 `;
 const FormButtonContainer = styled.div`

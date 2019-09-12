@@ -7,7 +7,7 @@ type TitleProps = {
 }
 
 const TitleContainer = styled.div`
-    min-width:260px;
+    min-width:220px;
     min-height:80px;
     border:${props => props.theme.border.bold};
     box-shadow:${props => props.theme.shadow.big};
