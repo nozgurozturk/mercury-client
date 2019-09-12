@@ -21,7 +21,11 @@ export const Projects: FunctionComponent = ({ }) => (
     <InnerContainer>
         <Title title="projects" />
         <List>
-            <Item key="test" title="test" link="https://www.example.com" type="page" />
+            <Item key="example" title="example" link="https://www.example.com" type="project" />
+            <Item key="example" title="example" link="https://www.example.com" type="project" />
+            <Item key="example" title="example" link="https://www.example.com" type="project" />
+            <Item key="example" title="example" link="https://www.example.com" type="project" />
+            <Item key="example" title="example" link="https://www.example.com" type="project" />
             <Item key="example" title="example" link="https://www.example.com" type="project" />
         </List>
         <ButtonContainer>
