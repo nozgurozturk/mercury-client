@@ -6,11 +6,13 @@ type ButtonState = {
 }
 
 const ButtonContainer = styled.div<ButtonState>`
+    margin-top:16px;
+    align-self: flex-end;
     width:${props => !props.isExpand ? "40px" : "240px"};
     height:${props => !props.isExpand ? "40px" : "100px"};
     background-color:${props => props.theme.colors.white};
     border:${props => props.theme.border.bold};
-    box-shadow:${props => props.theme.shadow.normal};
+    box-shadow:${props => !props.isExpand ? props.theme.shadow.normal : props.theme.shadow.big};
     padding:${props => !props.isExpand ? "0px" : "10px"};
     transition:600ms;
     &:hover{

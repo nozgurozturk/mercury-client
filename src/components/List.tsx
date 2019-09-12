@@ -6,8 +6,9 @@ type ListProps = {
 }
 
 const ListContainer = styled.div`
-    min-width:300px;
-    min-height:300px;
+    margin-top:16px;
+    min-width:260px;
+    min-height:120px;
     border:${props => props.theme.border.bold};
     box-shadow:${props => props.theme.shadow.big};
     background-color:${props => props.theme.colors.white};

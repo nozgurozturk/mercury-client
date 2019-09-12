@@ -4,6 +4,7 @@ import { SPTheme } from "./utils/styles/SPTheme";
 
 import { Title } from './components/Title';
 import { List } from './components/List';
+import { AddButton } from './components/AddButton';
 
 const AppContainer = styled.main`
     max-width:960px;
@@ -36,7 +37,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={SPTheme}>
       <AppContainer>
-          <></>
+        <></>
       </AppContainer>
     </ThemeProvider>
   );
