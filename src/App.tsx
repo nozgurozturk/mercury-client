@@ -4,7 +4,7 @@ import { SPTheme } from "./utils/styles/SPTheme";
 
 import { Projects } from './components/Projects';
 import { Pages } from './components/Pages';
-import { AddButton } from './components/AddButton';
+import { Guides } from './components/Guides';
 
 const AppContainer = styled.main`
     margin:60px auto;
@@ -27,11 +27,9 @@ const App: React.FC = () => {
       <AppContainer>
         <PGContainer>
           <Projects />
-          <Projects />
+          <Guides />
         </PGContainer>
-
           <Pages/>
-
       </AppContainer>
     </ThemeProvider>
   );

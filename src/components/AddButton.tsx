@@ -7,14 +7,14 @@ type ButtonState = {
 
 const ButtonContainer = styled.div<ButtonState>`
     position:absolute;
+    box-sizing: border-box;
     top:0;
     right:0;
-    width:${props => !props.isExpand ? "40px" : "220px"};
-    height:${props => !props.isExpand ? "40px" : "100px"};
+    width:${props => !props.isExpand ? "44px" : "100%"};
+    height:${props => !props.isExpand ? "44px" : "100px"};
     background-color:${props => props.theme.colors.white};
     border:${props => props.theme.border.bold};
     box-shadow:${props => !props.isExpand ? props.theme.shadow.normal : props.theme.shadow.big};
-
     transition:600ms;
     &:hover{
         box-shadow:${props => props.theme.shadow.pressed};

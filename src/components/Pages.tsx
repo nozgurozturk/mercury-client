@@ -1,16 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import styled from "styled-components"
 import {Item} from './Item'
+import {AddButton} from './AddButton'
 
 const PageContainer = styled.div`
     width:660px;
     display:flex; 
     flex-direction:row;
-    justify-content:space-between;
+    justify-content:flex-start;
     flex-wrap:wrap;
+    position:relative;
 `;
 
 const PageWrapper = styled.div`
+    
     width:90px;
     height:90px;
     margin-right:30px;
@@ -28,6 +31,27 @@ export const Pages: FunctionComponent = () => (
     <PageWrapper>
         <Item key="test" title="test" link="https://www.example.com" type="page" />
     </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+    <PageWrapper>
+        <Item key="test" title="test" link="https://www.example.com" type="page" />
+    </PageWrapper>
+
+        <AddButton/>
+
     </PageContainer>
 
 )
