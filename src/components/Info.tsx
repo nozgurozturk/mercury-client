@@ -9,7 +9,7 @@ const WeatherContainer = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    width:300px;
+    width:200px;
     text-align:right;
     color:${props => props.theme.colors.black};
 `
@@ -30,22 +30,23 @@ const WeatherItem = styled.li`
 `
 const DayTitle = styled.h1`
     margin:0;
-    margin-bottom:36px;
+    margin-bottom:48px;
     padding:0;
     font-weight : ${props => props.theme.fontWeight.bold};
     font-size:${props => props.theme.fontSize.title};
     font-family:${props => props.theme.fontFamily};
+    font-variant-caps:all-small-caps;
 `
 
 export const Info: FunctionComponent = ({ }) => {
     const [data, setData] = useState<any>();
-    const [loading, setLoading] = useState<Boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
     const [time, setTime] = useState<any>()
 
-    const baseUrl: String = "https://api.openweathermap.org/data/2.5/forecast?id="
+    const baseUrl: string = "https://api.openweathermap.org/data/2.5/forecast?id="
 
     useEffect(() => {
-        (async (url: String) => {
+        (async (url: string) => {
             try {
                 const response = await axios.get(`${url}745044&appid=${API_KEY}`);
                 setData(response.data);
@@ -58,10 +59,13 @@ export const Info: FunctionComponent = ({ }) => {
     }, [])
 
     useEffect(() => {
-        setTime(moment().format('MMMM Do h:mm a'));
-    }, [time])
+   const currentTime = setInterval(()=>{
+    setTime(moment().format('MMM DD ddd LT'));
+   }, 1000)
+    return () => clearInterval(currentTime);
+    }, [])
 
-    const renderIcon = (icon: String) => {
+    const renderIcon = (icon: string) => {
 
         switch (icon) {
             case "Clear":
@@ -89,13 +93,13 @@ export const Info: FunctionComponent = ({ }) => {
                     <DayTitle>Today</DayTitle>
                     {array.list.map((e: { dt: string | number | undefined; weather: { main: string }[]; dt_txt: string | number; }) =>
                         // tslint:disable-next-line: jsx-no-multiline-js
-                        (<WeatherItem key={e.dt}>{(e.dt_txt).toString().slice(10, 16)}{"   "}{renderIcon(e.weather[0].main)}</WeatherItem>)).slice(0, 3)}
+                        (<WeatherItem key={e.dt}>{(e.dt_txt).toString().slice(10, 16)}{"     "}{renderIcon(e.weather[0].main)}</WeatherItem>)).slice(0, 3)}
                 </WeatherWrapper>
                 <WeatherWrapper>
                     <DayTitle>Tomorrow</DayTitle>
                     {array.list.map((e: { dt: string | number | undefined; weather: { main: string }[]; dt_txt: string | number; }) =>
                         // tslint:disable-next-line: jsx-no-multiline-js
-                        (<WeatherItem key={e.dt}>{(e.dt_txt).toString().slice(10, 16)}{"   "}{renderIcon(e.weather[0].main)}</WeatherItem>)).slice(8, 10)}
+                        (<WeatherItem key={e.dt}>{(e.dt_txt).toString().slice(10, 16)}{"     "}{renderIcon(e.weather[0].main)}</WeatherItem>)).slice(8, 10)}
                 </WeatherWrapper>
             </>
         )
@@ -106,9 +110,8 @@ export const Info: FunctionComponent = ({ }) => {
         return (
             // tslint:disable-next-line: jsx-wrap-multiline
             <>
-
                 <WeatherContainer>
-                    <DayTitle>{time.toString().toUpperCase()}</DayTitle>
+                    <DayTitle>{time}</DayTitle>
                     {renderList(data)}
                 </WeatherContainer>
             </>
