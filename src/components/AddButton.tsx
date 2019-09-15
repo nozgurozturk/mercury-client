@@ -26,7 +26,7 @@ const Plus = styled.div`
     font-weight:${props => props.theme.fontWeight.bold};
     vertical-align:middle;
     text-align:center;
-    line-height:40px;
+    line-height:36px;
     cursor: pointer;
 `;
 const FormContainer = styled.form`
