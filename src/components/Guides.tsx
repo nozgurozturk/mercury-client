@@ -22,11 +22,6 @@ export const Guides: FunctionComponent = ({ }) => (
         <Title title="guides and rules" />
         <List>
             <Item key="example" title="guide" link="https://www.example.com" type="guide" />
-            <Item key="example" title="rule" link="https://www.example.com" type="rule" />
-            <Item key="example" title="rule" link="https://www.example.com" type="rule" />
-            <Item key="example" title="guide" link="https://www.example.com" type="guide" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
         </List>
         <ButtonContainer>
             <AddButton />

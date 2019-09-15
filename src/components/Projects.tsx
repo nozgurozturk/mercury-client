@@ -22,11 +22,6 @@ export const Projects: FunctionComponent = ({ }) => (
         <Title title="projects" />
         <List>
             <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
-            <Item key="example" title="example" link="https://www.example.com" type="project" />
         </List>
         <ButtonContainer>
             <AddButton />
