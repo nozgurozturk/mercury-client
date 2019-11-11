@@ -1,6 +1,4 @@
-
 import 'styled-components'
-
 
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -12,6 +10,12 @@ declare module 'styled-components' {
       gray600:string
       gray800:string
       alert: string
+    },
+    fontSize :{
+      header: string
+      body: string
+      info : string
+      tip : string
     }
   }
 }
