@@ -12,8 +12,40 @@ import {Home} from './containers/Home'
 // Global Style
 
 const GlobalStyle = createGlobalStyle`
+
+  @font-face {
+    font-family: RoobertBold;
+    src: url("/assets/fonts/Roobert-Bold.woff");
+    font-style:normal;
+  }
+  @font-face {
+    font-family: RoobertBold;
+    src: url("/assets/fonts/Roobert-BoldItalic.woff");
+    font-style:italic;
+  }
+  @font-face {
+    font-family: RoobertRegular;
+    src: url("/assets/fonts/Roobert-Regular.woff");
+    font-style:normal;
+  }
+  @font-face {
+    font-family: RoobertRegular;
+    src: url("/assets/fonts/Roobert-RegularItalic.woff");
+    font-style:italic;
+  }
+  @font-face {
+    font-family: RoobertLight;
+    src: url("/assets/fonts/Roobert-Light.woff");
+    font-style:normal;
+  }
+  @font-face {
+    font-family: RoobertLight;
+    src: url("/assets/fonts/Roobert-LightItalic.woff");
+    font-style:italic;
+  }
   body {
     background-color: ${props => props.theme.colors.background};
+    font-family:RoobertLight;
   }
 `
 
