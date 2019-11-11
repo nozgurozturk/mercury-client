@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from '../utils/context/AuthContext';
+import { AuthContext } from '../../utils/context/AuthContext';
 
 
 // Typed Components

@@ -6,7 +6,7 @@ import { AuthReducer, initialAuthState } from './utils/reducer/AuthReducer'
 import {ThemeContext} from './utils/context/ThemeContext'
 import {ThemeReducer, initialThemeState} from './utils/reducer/ThemeReducer'
 // Containers and Components
-import { Login } from "./containers/Login"
+import { Login } from "./containers/Auth/Login"
 import {Home} from './containers/Home'
 
 // Global Style
@@ -46,7 +46,20 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${props => props.theme.colors.background};
     font-family:RoobertLight;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
   }
+  h1,h2,h3,h4,h5,h6{
+    margin:0;
+    padding:0;
+  }
+  ul,li{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  
 `
 
 const App: React.FC = () => {
