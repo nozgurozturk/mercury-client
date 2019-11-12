@@ -18,6 +18,7 @@ const initialBoard: BoardType = {
 }
 
 const BoardContainer = styled.ul`
+    grid-area:BRD;
     display:grid;
     grid-auto-flow:column;
     column-gap:48px;
@@ -99,10 +100,7 @@ export const Boards: FunctionComponent = () => {
                     )
                 }) : <>Loading...</>}
             </BoardContainer>
-            <form onSubmit={sendBoard}>
-                <input onChange={(e) => setBoardName(e.target.value)} type='text' />
-                <input type="submit" value="add board" />
-            </form>
+
         </>
     )
 }

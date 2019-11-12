@@ -1,9 +1,21 @@
 import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
 
-type Props = {
-title: string
-}
+import { Weather } from "../components/Weather";
+import { Time } from "../components/Time";
+import {Settings} from "../components/Settings";
 
-export const ComponentName: FunctionComponent<Props> = ({ title }) => (
-<h1>{title}</h1>
+const InfoContainer = styled.div`
+    grid-area:INF;
+    display:grid;
+    grid-auto-flow:row;
+    grid-template-rows: 1fr 4fr 1fr;
+`;
+
+export const Infos: FunctionComponent = () => (
+    <InfoContainer>
+        <Time />
+        <Weather />
+        <Settings />
+    </InfoContainer>
 )

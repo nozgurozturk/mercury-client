@@ -52,7 +52,7 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items 
         <ItemContainer>
             {items!.map((item, index) => (
                 // tslint:disable-next-line: jsx-no-multiline-js
-                <Item key={index} itemName={item.name} />
+                <Item type='board' key={index} itemName={item.name} />
             ))}
         </ItemContainer>
         <Button>[+]</Button>

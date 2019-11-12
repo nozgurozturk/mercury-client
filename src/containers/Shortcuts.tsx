@@ -7,6 +7,10 @@ type Props = {
     title: string
 }
 
+const ShortcutContainer = styled.div`
+    grid-area:STC;
+`;
+
 const ShortcutTitle = styled.h3`
     color:${props => props.theme.colors.main};
     font-size:${props => props.theme.fontSize.header};
@@ -14,7 +18,7 @@ const ShortcutTitle = styled.h3`
     margin-bottom:16px;
 `;
 
-const ShortcutContainer = styled.ul`
+const ShortcutWrapper = styled.ul`
     display:grid;
     grid-auto-flow:column;
     justify-content:flex-start;
@@ -25,14 +29,14 @@ const ShortcutContainer = styled.ul`
 export const Shortcuts: FunctionComponent = () => {
 
     return (
-        <>
-        <ShortcutTitle>Shortcuts</ShortcutTitle>
         <ShortcutContainer>
+        <ShortcutTitle>Shortcuts</ShortcutTitle>
+        <ShortcutWrapper>
             <Item type='shortcut' itemName='github'/>
             <Item type='shortcut' itemName='jira'/>
             <Item type='shortcut' itemName='figma'/>
             <Item type='shortcut' itemName='react'/>
+        </ShortcutWrapper>
         </ShortcutContainer>
-        </>
     )
 }

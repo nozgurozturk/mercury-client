@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components'
 
 const Header = styled.h1`
+    grid-area:TIT;
     color:${props => props.theme.colors.main};
     font-size:${props => props.theme.fontSize.header};
     font-family:RoobertBold;

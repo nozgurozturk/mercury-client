@@ -4,7 +4,8 @@ import styled from 'styled-components'
 
 
 type ItemProps = {
-itemName: string
+    itemName: string
+    type: string
 }
 
 const ItemWrapper = styled.li`
@@ -31,15 +32,27 @@ const EditButton = styled(Button)`
     left:-36px;
 `
 
-export const Item: FunctionComponent<ItemProps> = ({ itemName }) => (
-<ItemWrapper>
-    <EditButton>[e]</EditButton>
-    <ItemName>{itemName}</ItemName>
-    <Button>[git]</Button>
-    <Button>[+]</Button>
-</ItemWrapper>
-)
+export const Item: FunctionComponent<ItemProps> = ({ itemName, type }) => {
+
+    if (type === 'board') {
+        return (
+            <ItemWrapper>
+                <EditButton>[e]</EditButton>
+                <ItemName>{itemName}</ItemName>
+                <Button>[git]</Button>
+                <Button>[+]</Button>
+            </ItemWrapper>
+        )
+    } else {
+        return (
+            <ItemWrapper>
+                <ItemName>{itemName}</ItemName>
+            </ItemWrapper>
+        )
+    }
+}
 
 export interface IItem {
     name: string
+    type: string
 }

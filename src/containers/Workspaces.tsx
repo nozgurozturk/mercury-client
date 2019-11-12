@@ -32,6 +32,7 @@ const WS: { id: number, name: string }[] = [
 ]
 
 const WorkspaceContainer = styled.ul`
+     grid-area:WS;
     display:grid;
     grid-auto-flow:column;
     justify-content:flex-start;
