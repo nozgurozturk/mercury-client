@@ -13,16 +13,15 @@ type BoardProps = {
 const BoardWrapper = styled.div`
     display:grid;
     grid-auto-flow:row;
-    row-gap:24px;
-    width:384px;
+    row-gap:16px;
+    width:320px;
 `;
 
 const BoardHeader = styled.div`
     display:grid;
     grid-auto-flow:column;
-    column-gap:24px;
+    column-gap:16px;
     align-items:center;
-   
 `;
 
 const BoardName = styled.h3`
@@ -42,10 +41,8 @@ const ItemContainer = styled.ul`
     grid-auto-flow:row;
     align-items:flex-start;
     height:240px;
-    row-gap:24px;
-    overflow-y:scroll;
-
-`
+    row-gap:16px;
+`;
 
 
 

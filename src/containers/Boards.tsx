@@ -20,7 +20,7 @@ const initialBoard: BoardType = {
 const BoardContainer = styled.ul`
     display:grid;
     grid-auto-flow:column;
-    column-gap:88px;
+    column-gap:48px;
     align-items:flex-start;
     overflow-x:scroll;
 `;

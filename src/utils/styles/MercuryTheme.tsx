@@ -1,6 +1,13 @@
 // my-theme.ts
 import { DefaultTheme } from 'styled-components'
 
+const FontSizes  = {
+  header: '26pt',
+  body: '20pt',
+  info : '14pt',
+  tip : '8pt'
+}
+
 const MercuryLight: DefaultTheme ={
     colors: {
         main: "#101011",
@@ -11,12 +18,7 @@ const MercuryLight: DefaultTheme ={
         gray800: '#404044',
         alert : '#FF0C0C'
     },
-    fontSize :{
-        header: '48px',
-        body: '36px',
-        info : '24px',
-        tip : '18px'
-      }
+    fontSize : FontSizes
 }
 const MercuryDark: DefaultTheme = {
     colors: {
@@ -28,12 +30,7 @@ const MercuryDark: DefaultTheme = {
         gray800: '#E0E0EE',
         alert : '#FF0C0C'
       },
-      fontSize :{
-        header: '48px',
-        body: '36px',
-        info : '24px',
-        tip : '18px'
-      }
+      fontSize : FontSizes
 }
 
 export {MercuryLight, MercuryDark}

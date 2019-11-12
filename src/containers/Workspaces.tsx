@@ -34,7 +34,8 @@ const WS: { id: number, name: string }[] = [
 const WorkspaceContainer = styled.ul`
     display:grid;
     grid-auto-flow:column;
-    column-gap:50px;
+    justify-content:flex-start;
+    column-gap:48px;
     overflow-x:scroll;
 `;
 
