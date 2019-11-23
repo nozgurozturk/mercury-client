@@ -6,8 +6,9 @@ import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 type ItemProps = {
     id: number
     index: number
+    order_number : number
+    board_id : number
     itemName: string
-    orderNumber : number
     type: string
 }
 
@@ -50,7 +51,6 @@ export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }
                     </ItemWrapper>
 
                 )}
-   
             </Draggable>
 
         )
@@ -66,7 +66,8 @@ export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }
 export interface IItem {
     id: number
     index: number
+    order_number : number
+    board_id : number
     name: string
-    orderNumber : number
     type: string
 }

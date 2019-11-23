@@ -8,7 +8,7 @@ type BoardProps = {
     id: number
     name: string
     user_id: number
-    items?: [IItem]
+    items?: IItem[]
 }
 
 const BoardWrapper = styled.div`
@@ -38,7 +38,6 @@ const Button = styled.div`
 `;
 
 const ItemContainer = styled.ul`
-  
     max-height:240px;
 `;
 
@@ -76,12 +75,13 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items 
             <Droppable droppableId={String(id)}>
                 {(provided: DroppableProvided) => (
                     <ItemContainer {...provided.droppableProps} ref={provided.innerRef}>
-                        {!loading ? sorted!.map((item, index) => (
+                        {!loading ? items!.map((item, index) => (
                             <Item
                                 key={item.id}
                                 index={index}
                                 id={item.id}
-                                orderNumber={item.orderNumber}
+                                board_id={item.board_id}
+                                order_number={item.order_number}
                                 itemName={item.name}
                                 type='board'
                             />
