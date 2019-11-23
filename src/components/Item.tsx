@@ -1,10 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components'
-
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 
 
 type ItemProps = {
+    id: number
+    index: number
     itemName: string
+    orderNumber : number
     type: string
 }
 
@@ -15,6 +18,7 @@ const ItemWrapper = styled.li`
     column-gap:16px;
     justify-content:flex-start;
     align-items:center;
+    height:48px;
 `;
 
 const ItemName = styled.a`
@@ -32,16 +36,23 @@ const EditButton = styled(Button)`
     left:-36px;
 `
 
-export const Item: FunctionComponent<ItemProps> = ({ itemName, type }) => {
+export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }) => {
 
     if (type === 'board') {
         return (
-            <ItemWrapper>
-                <EditButton>[e]</EditButton>
-                <ItemName>{itemName}</ItemName>
-                <Button>[git]</Button>
-                <Button>[+]</Button>
-            </ItemWrapper>
+            <Draggable draggableId={String(id)} index={index}>
+                {(provided: DraggableProvided) => (
+                    <ItemWrapper {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <EditButton>[e]</EditButton>
+                        <ItemName>{itemName}</ItemName>
+                        <Button>[git]</Button>
+                        <Button>[+]</Button>
+                    </ItemWrapper>
+
+                )}
+   
+            </Draggable>
+
         )
     } else {
         return (
@@ -53,6 +64,9 @@ export const Item: FunctionComponent<ItemProps> = ({ itemName, type }) => {
 }
 
 export interface IItem {
+    id: number
+    index: number
     name: string
+    orderNumber : number
     type: string
 }

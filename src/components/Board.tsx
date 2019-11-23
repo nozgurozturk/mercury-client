@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef, useState, useEffect } from 'react';
+import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import { Item, IItem } from './Item';
@@ -37,24 +38,59 @@ const Button = styled.div`
 `;
 
 const ItemContainer = styled.ul`
-    display:grid;
-    grid-auto-flow:row;
-    align-items:flex-start;
-    height:240px;
-    row-gap:16px;
+  
+    max-height:240px;
 `;
 
 
+export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items }) => {
+    const [sorted, setSorted] = useState<IItem[]>();
+    const [loading, setLoading] = useState<boolean>(true)
 
-export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items }) => (
-    <BoardWrapper>
-        <BoardHeader><BoardName>{name}</BoardName><Button>[-]</Button></BoardHeader>
-        <ItemContainer>
-            {items!.map((item, index) => (
-                // tslint:disable-next-line: jsx-no-multiline-js
-                <Item type='board' key={index} itemName={item.name} />
-            ))}
-        </ItemContainer>
-        <Button>[+]</Button>
-    </BoardWrapper>
-)
+    const sortedArray = (key: any) => {
+        return function (a: any, b: any) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+            let comparison: number = 0;
+            if (a[key] > b[key]) {
+                comparison = 1;
+            } else if (a[key] < b[key]) {
+                comparison = -1;
+            }
+            return comparison
+        }
+    }
+
+    useEffect(() => {
+        const sortedArr = items!.sort(sortedArray("order_number"))
+        setSorted(sortedArr);
+        setLoading(false)
+    }, [])
+
+
+    return (
+        <BoardWrapper >
+            <BoardHeader><BoardName>{name}</BoardName><Button>[-]</Button></BoardHeader>
+            <Droppable droppableId={String(id)}>
+                {(provided: DroppableProvided) => (
+                    <ItemContainer {...provided.droppableProps} ref={provided.innerRef}>
+                        {!loading ? sorted!.map((item, index) => (
+                            <Item
+                                key={item.id}
+                                index={index}
+                                id={item.id}
+                                orderNumber={item.orderNumber}
+                                itemName={item.name}
+                                type='board'
+                            />
+                        )) : <div>loading...</div>}
+                        {provided.placeholder}
+                    </ItemContainer>
+                )}
+            </Droppable>
+            <Button>[+]</Button>
+        </BoardWrapper>
+    )
+}

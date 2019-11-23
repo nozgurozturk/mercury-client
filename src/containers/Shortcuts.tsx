@@ -32,10 +32,10 @@ export const Shortcuts: FunctionComponent = () => {
         <ShortcutContainer>
         <ShortcutTitle>Shortcuts</ShortcutTitle>
         <ShortcutWrapper>
-            <Item type='shortcut' itemName='github'/>
-            <Item type='shortcut' itemName='jira'/>
-            <Item type='shortcut' itemName='figma'/>
-            <Item type='shortcut' itemName='react'/>
+            <Item index={1} id={99} orderNumber={1} type='shortcut' itemName='github'/>
+            <Item index={2} id={98} orderNumber={2} type='shortcut' itemName='jira'/>
+            <Item index={3} id={97} orderNumber={3} type='shortcut' itemName='figma'/>
+            <Item index={4}  id={96} orderNumber={4}type='shortcut' itemName='react'/>
         </ShortcutWrapper>
         </ShortcutContainer>
     )

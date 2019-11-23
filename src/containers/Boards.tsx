@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import {Board} from '../components/Board';
-import {IItem} from '../components/Item';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+import { Board } from '../components/Board';
+import { IItem } from '../components/Item';
 
 type BoardType = {
     id: number
@@ -13,8 +13,7 @@ type BoardType = {
 const initialBoard: BoardType = {
     id: 0,
     name: "You don't have board",
-    user_id: 0
-
+    user_id: 0,
 }
 
 const BoardContainer = styled.ul`
@@ -27,7 +26,7 @@ const BoardContainer = styled.ul`
 `;
 
 export const Boards: FunctionComponent = () => {
-    const [boards, setBoards] = useState<[BoardType]>([initialBoard])
+    const [boards, setBoards] = useState<BoardType[]>([initialBoard])
     const [loading, setLoading] = useState<Boolean>(true)
     const [boardName, setBoardName] = useState<String>('');
     const getBoard = async () => {
@@ -68,7 +67,7 @@ export const Boards: FunctionComponent = () => {
                 {
                     headers: myHeaders,
                     method: "POST",
-                    body: JSON.stringify({name:boardName})
+                    body: JSON.stringify({ name: boardName })
                 }
             )
             const json = await response.json();
@@ -85,20 +84,49 @@ export const Boards: FunctionComponent = () => {
             console.error(error)
         }
     }
+ 
+    const onDragEnd = (result: DropResult): void => {
+        const { destination, source, draggableId } = result;
 
+        //if destination is not valid return 
+        if (!destination) {
+            return
+        }
+        //if destination and source are same return 
+        if (destination.droppableId === source.droppableId &&
+            destination.index === source.index) {
+            return
+        }
+        
+        const board = boards[Number(source.droppableId)];
+        let itemArray:number[] =[];
+        board.items!.forEach(item=>itemArray.push(item.id))
+        
+        const newItemIds = Array.from(itemArray);
+        newItemIds.splice(source.index, 1);
+        newItemIds.splice(destination.index, 0, Number(draggableId));
+
+        const newBoard = {
+            ...board,
+            itemIds:newItemIds
+        } 
+        setBoards({...boards, [newBoard.id]:newBoard})
+        console.log(boards);
+}
     useEffect(() => {
-        getBoard()
+        getBoard();
     }, [])
-
     return (
         <>
             <BoardContainer>
-                {!loading ? boards.map((board, index) => {
-                    // tslint:disable-next-line: jsx-no-multiline-js
-                    return (
-                       <Board key={index} name={board.name} items={board.items} id={board.id} user_id={board.user_id} />
-                    )
-                }) : <>Loading...</>}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {!loading ? boards.map((board, index) => {
+                        // tslint:disable-next-line: jsx-no-multiline-js
+                        return (
+                            <Board key={index} name={board.name} items={board.items} id={board.id} user_id={board.user_id} />
+                        )
+                    }) : <>Loading...</>}
+                </DragDropContext>
             </BoardContainer>
 
         </>

@@ -15,7 +15,10 @@
         "quotemark": false,
         "no-console": false,
         "semicolon": false,
-        "jsx-no-lambda": false
+        "jsx-no-lambda": false,
+        "jsx-wrap-multiline":false,
+        "jsx-no-multiline-js":false,
+        "jsx-alignment":false
     },
     "rulesDirectory": [],
     "linterOptions":{
