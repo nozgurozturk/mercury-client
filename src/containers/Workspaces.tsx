@@ -1,35 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import { Workspace } from '../components/Workspace';
-
-
-const WS: { id: number, name: string }[] = [
-    {
-        id: 1,
-        name: 'Workspace 1'
-    },
-    {
-        id: 2,
-        name: 'Workspace 2'
-    },
-    {
-        id: 3,
-        name: 'Workspace 3'
-    },
-    {
-        id: 4,
-        name: 'Workspace 4'
-    },
-    {
-        id: 5,
-        name: 'Workspace 5'
-    },
-    {
-        id: 6,
-        name: 'Workspace 6'
-    },
-]
+import { Workspace, IWorkspace } from '../components/Workspace';
+import { WorkSpaceContext } from '../utils/context/WorkspaceContext';
 
 const WorkspaceContainer = styled.ul`
      grid-area:WS;
@@ -40,15 +13,48 @@ const WorkspaceContainer = styled.ul`
     overflow-x:scroll;
 `;
 
-export const Workspaces: FunctionComponent = () => (
-    <>
-        <WorkspaceContainer>
+export const Workspaces: FunctionComponent = () => {
+    const [workspaces, setWorkspace] = useState<IWorkspace[]>();
+    const [loading, setLoading] = useState<boolean>(true);
+    const {workspaceDispatch} = useContext(WorkSpaceContext);
+    const getWorkspace = async () => {
+        const id: any = parseInt(localStorage.getItem('user')!)
+        const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
+        try {
+            let myHeaders = new Headers({
+                "Authorization": token,
+                "Content-Type": "application/json"
+            });
+            const response = await fetch(
+                // `https://mercury-server.herokuapp.com/user/${id}`,
+                `http://localhost:8080/workspace`,
+                {
+                    headers: myHeaders,
+                    method: "GET",
+                }
+            )
+            const json = await response.json()
+            setWorkspace(json)
+            setLoading(false)
+            console.log(json);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+   useEffect(()=>{
+        getWorkspace();
+        workspaceDispatch({type:'SET_WORKPSACE', payload:workspaces![0].id})
+   },[]) 
+    return (
+        <>
+            <WorkspaceContainer>
 
-            {WS.map((workspace, index) => (
-                // tslint:disable-next-line: jsx-no-multiline-js
+                {!loading ? workspaces!.map((workspace, index) => (
+                    // tslint:disable-next-line: jsx-no-multiline-js
 
-                <Workspace key={index} name={workspace.name} id={workspace.id} />
-            ))}
-        </WorkspaceContainer>
-    </>
-)
+                    <Workspace key={index} name={workspace.name} id={workspace.id} boards={workspace.boards} />
+                )): <>Loading...</>}
+            </WorkspaceContainer>
+        </>
+    )
+}

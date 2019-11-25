@@ -6,11 +6,12 @@ import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 type ItemProps = {
     id: number
     index: number
-    order_number : number
-    board_id : number
-    itemName: string
+    order_number: number
+    board_id: number
+    item_name: string
     type: string
 }
+
 
 const ItemWrapper = styled.li`
     position:relative;
@@ -37,7 +38,7 @@ const EditButton = styled(Button)`
     left:-36px;
 `
 
-export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }) => {
+export const Item: FunctionComponent<ItemProps> = ({ id, index, item_name, type }) => {
 
     if (type === 'board') {
         return (
@@ -45,7 +46,7 @@ export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }
                 {(provided: DraggableProvided) => (
                     <ItemWrapper {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         <EditButton>[e]</EditButton>
-                        <ItemName>{itemName}</ItemName>
+                        <ItemName>{item_name}</ItemName>
                         <Button>[git]</Button>
                         <Button>[+]</Button>
                     </ItemWrapper>
@@ -57,17 +58,18 @@ export const Item: FunctionComponent<ItemProps> = ({ id, index, itemName, type }
     } else {
         return (
             <ItemWrapper>
-                <ItemName>{itemName}</ItemName>
+                <ItemName>{item_name}</ItemName>
             </ItemWrapper>
         )
     }
 }
 
+
 export interface IItem {
     id: number
     index: number
-    order_number : number
-    board_id : number
+    order_number: number
+    board_id: number
     name: string
     type: string
 }

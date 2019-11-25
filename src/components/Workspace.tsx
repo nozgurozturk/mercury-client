@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { IBoard } from './Board';
 
 type WSProps =  {
     id: number
     name: string
+    boards : IBoard[]
 }
 
 const WS = styled.h2`
@@ -13,6 +15,13 @@ const WS = styled.h2`
     width:320px;
 `;
 
-export const Workspace: FunctionComponent<WSProps> = ({ id, name }) => (
+export const Workspace: FunctionComponent<WSProps> = ({ id, name, boards }) => (
     <WS>{name}</WS>
 )
+
+export interface IWorkspace {
+    id: number
+    name: string
+    boards : IBoard[]
+
+}

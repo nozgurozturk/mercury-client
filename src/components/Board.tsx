@@ -39,13 +39,14 @@ const Button = styled.div`
 
 const ItemContainer = styled.ul`
     max-height:240px;
+    overflow-y:scroll;
 `;
 
 
-export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items }) => {
-    const [sorted, setSorted] = useState<IItem[]>();
+export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items, }) => {
     const [loading, setLoading] = useState<boolean>(true)
-
+    const [initItems, setinitItems] = useState<IItem[]>();
+    const [itemName, setItemName] = useState<string>('')
     const sortedArray = (key: any) => {
         return function (a: any, b: any) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -62,11 +63,50 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items 
         }
     }
 
+    const sendItem = async (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+        setLoading(true);
+        const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
+        try {
+            let myHeaders = new Headers({
+                "Authorization": token,
+                "Content-Type": "application/json"
+            });
+            const response = await fetch(
+                // `https://mercury-server.herokuapp.com/user/${id}`,
+                `http://localhost:8080/item`,
+                {
+                    headers: myHeaders,
+                    method: "POST",
+                    body: JSON.stringify({ name: itemName, board_id: id })
+                }
+            )
+            const json = await response.json();
+            if (response.ok) {
+                if (json.status) {
+                    console.log(json)
+                    console.log('Succesfuly send board data to server')
+                }
+            setLoading(false);
+             setItemName('');   
+            } else {
+                console.log(json)
+                console.log('Something wrong')
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     useEffect(() => {
-        const sortedArr = items!.sort(sortedArray("order_number"))
-        setSorted(sortedArr);
+        items!.sort(sortedArray("order_number"))
         setLoading(false)
     }, [])
+
+    useEffect(()=>{
+        setinitItems(items)
+    },[items])
 
 
     return (
@@ -75,14 +115,14 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items 
             <Droppable droppableId={String(id)}>
                 {(provided: DroppableProvided) => (
                     <ItemContainer {...provided.droppableProps} ref={provided.innerRef}>
-                        {!loading ? items!.map((item, index) => (
+                        {!loading ? initItems!.map((item, index) => (
                             <Item
                                 key={item.id}
                                 index={index}
                                 id={item.id}
                                 board_id={item.board_id}
                                 order_number={item.order_number}
-                                itemName={item.name}
+                                item_name={item.name}
                                 type='board'
                             />
                         )) : <div>loading...</div>}
@@ -90,7 +130,18 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items 
                     </ItemContainer>
                 )}
             </Droppable>
+            <form onSubmit={sendItem}>
+                <input onChange={e=>(setItemName(e.target.value))} type='text' required={true} />
+                <input type="submit" value="submit" />
+            </form>
             <Button>[+]</Button>
         </BoardWrapper>
     )
+}
+
+export interface IBoard {
+    id: number
+    name: string
+    user_id: number
+    items?: IItem[]
 }

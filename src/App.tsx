@@ -5,9 +5,12 @@ import { AuthContext } from './utils/context/AuthContext'
 import { AuthReducer, initialAuthState } from './utils/reducer/AuthReducer'
 import {ThemeContext} from './utils/context/ThemeContext'
 import {ThemeReducer, initialThemeState} from './utils/reducer/ThemeReducer'
+import {WorkSpaceContext} from './utils/context/WorkSpaceContext'
+import { WorkSpaceReducer, initialWSState } from './utils/reducer/WorkspaceReducer';
 // Containers and Components
 import { Login } from "./containers/Auth/Login"
 import {Home} from './containers/Home'
+
 
 // Global Style
 
@@ -66,6 +69,7 @@ const App: React.FC = () => {
   
   const [state, dispatch] = useReducer(AuthReducer, initialAuthState);
   const [theme, themeDispatch] = useReducer(ThemeReducer, initialThemeState)
+  const [workspace, workspaceDispatch] = useReducer(WorkSpaceReducer, initialWSState)
   useEffect(() => {
 
     //Checking local storage for user is exist
@@ -79,7 +83,12 @@ const App: React.FC = () => {
     <ThemeContext.Provider value={{theme, themeDispatch}}>
       <ThemeProvider theme={theme.theme}>
         <AuthContext.Provider value={{ state, dispatch }}>
-          <>{!state.authenticated ? <Login /> : <Home/>}</>
+          <>{!state.authenticated ? <Login /> : 
+          <WorkSpaceContext.Provider value={{ state, dispatch }}>
+            <Home/>
+          </WorkSpaceContext.Provider>
+          
+          }</>
           <GlobalStyle/>
         </AuthContext.Provider >
       </ThemeProvider>

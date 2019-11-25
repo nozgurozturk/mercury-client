@@ -1,16 +1,12 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { Board } from '../components/Board';
+import { Board, IBoard } from '../components/Board';
 import { IItem } from '../components/Item';
+import { WorkSpaceContext } from '../utils/context/WorkspaceContext';
 
-type BoardType = {
-    id: number
-    name: string
-    user_id: number
-    items?: IItem[]
-}
-const initialBoard: BoardType = {
+
+const initialBoard: IBoard = {
     id: 0,
     name: "You don't have board",
     user_id: 0,
@@ -29,14 +25,17 @@ const reorder = (list: IItem[], startIndex: number, endIndex: number): IItem[] =
     const result = [...list];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
+    result.map((item, index)=>{
+        item.order_number = index
+    })
     return result;
 };
 
 export const Boards: FunctionComponent = () => {
-    const [boards, setBoards] = useState<BoardType[]>([initialBoard])
+    const [boards, setBoards] = useState<IBoard[]>([initialBoard])
     const [loading, setLoading] = useState<Boolean>(true)
     const [boardName, setBoardName] = useState<String>('');
+    const {workspace} = useContext(WorkSpaceContext);
 
     const getBoard = async () => {
         const id: any = parseInt(localStorage.getItem('user')!)
@@ -48,7 +47,7 @@ export const Boards: FunctionComponent = () => {
             });
             const response = await fetch(
                 // `https://mercury-server.herokuapp.com/user/${id}`,
-                `http://localhost:8080/board`,
+                `http://localhost:8080/workspace/${workspace}/board`,
                 {
                     headers: myHeaders,
                     method: "GET",
@@ -94,8 +93,8 @@ export const Boards: FunctionComponent = () => {
         }
     }
 
-    const sendDraggablePos = async (itemID: number, itemName: string, orderNumber: number, boardID:number) => {
-        
+    const sendDraggablePos = async (itemID: number, itemName: string, orderNumber: number, boardID: number) => {
+
         const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
         try {
             let myHeaders = new Headers({
@@ -108,7 +107,7 @@ export const Boards: FunctionComponent = () => {
                 {
                     headers: myHeaders,
                     method: "PUT",
-                    body: JSON.stringify({ name: itemName, order_number: orderNumber, board_id:boardID })
+                    body: JSON.stringify({ name: itemName, order_number: orderNumber, board_id: boardID })
                 }
             )
             const json = await response.json();
@@ -125,6 +124,13 @@ export const Boards: FunctionComponent = () => {
             console.error(error)
         }
     }
+    const onDragStart = ()=> {
+        // Add a little vibration if the browser supports it.
+        // Add's a nice little physical feedback
+        if (window.navigator.vibrate) {
+          window.navigator.vibrate(100);
+        }
+      }
 
     const onDragEnd = (result: DropResult): void => {
         const { destination, source } = result;
@@ -137,23 +143,15 @@ export const Boards: FunctionComponent = () => {
             return;
         }
         const board = boards[Number(source.droppableId) - 1];
-        const newItems: IItem[] = [...board.items!];
-        const reOrdered = reorder(newItems, source.index, destination.index)
-        newItems[source.index].order_number = destination.index
-        newItems.map(item=>{
-            if(item.id>destination.index){
-                item.order_number += 1;
-                sendDraggablePos(item.id, item.name, item.order_number, item.board_id)
-            }
-            
+        const reOrdered = reorder(board.items!, source.index, destination.index)
+        reOrdered.map((item) => {
+            sendDraggablePos(item.id, item.name, item.order_number, item.board_id)
         })
-        const newBoard: BoardType = {
+        const newBoard: IBoard = {
             ...board,
             items: reOrdered
         }
-        console.log(newBoard);
-        
-        const newBoards: BoardType[] = [
+        const newBoards: IBoard[] = [
             ...boards
         ]
         newBoards[Number(source.droppableId) - 1] = newBoard
@@ -161,12 +159,12 @@ export const Boards: FunctionComponent = () => {
     }
     useEffect(() => {
         getBoard();
-    }, [])
+    }, [workspace])
 
     return (
         <>
             <BoardContainer>
-                <DragDropContext onDragEnd={onDragEnd}>
+                <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
                     {!loading ? boards.map((board, index) => {
                         // tslint:disable-next-line: jsx-no-multiline-js
                         return (
