@@ -7,7 +7,6 @@ import { Item, IItem } from './Item';
 type BoardProps = {
     id: number
     name: string
-    user_id: number
     items?: IItem[]
 }
 
@@ -43,10 +42,10 @@ const ItemContainer = styled.ul`
 `;
 
 
-export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items, }) => {
+export const Board: FunctionComponent<BoardProps> = ({ name, id, items }) => {
     const [loading, setLoading] = useState<boolean>(true)
-    const [initItems, setinitItems] = useState<IItem[]>();
     const [itemName, setItemName] = useState<string>('')
+
     const sortedArray = (key: any) => {
         return function (a: any, b: any) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -62,6 +61,35 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items,
             return comparison
         }
     }
+
+    // const getItems = async ()=> {
+    //     const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
+    //     try {
+    //         let myHeaders = new Headers({
+    //             "Authorization": token,
+    //             "Content-Type": "application/json"
+    //         });
+    //         const response = await fetch(
+    //             // `https://mercury-server.herokuapp.com/user/${id}`,
+    //             `http://localhost:8080/board/${id}/item`,
+    //             {
+    //                 headers: myHeaders,
+    //                 method: "GET",
+    //             }
+    //         )
+    //         const json = await response.json();
+    //         if (response.ok) {
+    //             setItems(json)
+    //             setLoading(false);
+    //             console.log(json)
+    //         } else {
+    //             console.log(json)
+    //             console.log('Something wrong')
+    //         }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 
     const sendItem = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -87,8 +115,8 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items,
                     console.log(json)
                     console.log('Succesfuly send board data to server')
                 }
-            setLoading(false);
-             setItemName('');   
+                setLoading(false);
+                setItemName('');
             } else {
                 console.log(json)
                 console.log('Something wrong')
@@ -100,22 +128,16 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items,
 
 
     useEffect(() => {
-        items!.sort(sortedArray("order_number"))
-        setLoading(false)
+            items!.sort(sortedArray("order_number"))
+            setLoading(false)
     }, [])
-
-    useEffect(()=>{
-        setinitItems(items)
-    },[items])
-
-
     return (
         <BoardWrapper >
             <BoardHeader><BoardName>{name}</BoardName><Button>[-]</Button></BoardHeader>
             <Droppable droppableId={String(id)}>
                 {(provided: DroppableProvided) => (
                     <ItemContainer {...provided.droppableProps} ref={provided.innerRef}>
-                        {!loading ? initItems!.map((item, index) => (
+                        {!loading ? items!.map((item, index) => (
                             <Item
                                 key={item.id}
                                 index={index}
@@ -131,7 +153,7 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items,
                 )}
             </Droppable>
             <form onSubmit={sendItem}>
-                <input onChange={e=>(setItemName(e.target.value))} type='text' required={true} />
+                <input onChange={e => (setItemName(e.target.value))} type='text' required={true} />
                 <input type="submit" value="submit" />
             </form>
             <Button>[+]</Button>
@@ -142,6 +164,6 @@ export const Board: FunctionComponent<BoardProps> = ({ name, id, user_id, items,
 export interface IBoard {
     id: number
     name: string
-    user_id: number
+    workspace_id: number
     items?: IItem[]
 }

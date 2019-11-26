@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState, useEffect, useContext } from 'react
 import styled from 'styled-components';
 
 import { Workspace, IWorkspace } from '../components/Workspace';
-import { WorkSpaceContext } from '../utils/context/WorkspaceContext';
+import { WorkSpaceContext } from '../utils/context/WorkSpaceContext'
 
 const WorkspaceContainer = styled.ul`
      grid-area:WS;
@@ -16,9 +16,9 @@ const WorkspaceContainer = styled.ul`
 export const Workspaces: FunctionComponent = () => {
     const [workspaces, setWorkspace] = useState<IWorkspace[]>();
     const [loading, setLoading] = useState<boolean>(true);
-    const {workspaceDispatch} = useContext(WorkSpaceContext);
+    const { workspaceDispatch } = useContext(WorkSpaceContext);
     const getWorkspace = async () => {
-        const id: any = parseInt(localStorage.getItem('user')!)
+        setLoading(true);
         const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
         try {
             let myHeaders = new Headers({
@@ -34,26 +34,34 @@ export const Workspaces: FunctionComponent = () => {
                 }
             )
             const json = await response.json()
-            setWorkspace(json)
-            setLoading(false)
+            if (response.ok) {
+                setWorkspace(json)
+                setLoading(false)
+            }
             console.log(json);
         } catch (error) {
             console.error(error)
         }
     }
-   useEffect(()=>{
+    useEffect(() => {
+
         getWorkspace();
-        workspaceDispatch({type:'SET_WORKPSACE', payload:workspaces![0].id})
-   },[]) 
+
+    }, [])
+
+    useEffect(() => {
+
+        if (workspaces) {
+            workspaceDispatch({ type: 'SET_WORKSPACE', payload: workspaces[0].id })
+        }
+
+    }, [workspaces])
     return (
         <>
             <WorkspaceContainer>
-
                 {!loading ? workspaces!.map((workspace, index) => (
-                    // tslint:disable-next-line: jsx-no-multiline-js
-
-                    <Workspace key={index} name={workspace.name} id={workspace.id} boards={workspace.boards} />
-                )): <>Loading...</>}
+                    <Workspace key={index} name={workspace.name} id={workspace.id} />
+                )) : <>Loading...</>}
             </WorkspaceContainer>
         </>
     )
