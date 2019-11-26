@@ -1,5 +1,3 @@
-import { IWorkspace } from "../../components/Workspace"
-
 
 type WorkSpaceActionType = {
     type: 'SET_WORKSPACE',
@@ -7,17 +5,17 @@ type WorkSpaceActionType = {
 }
 
 export type IWorkSpaceState = {
-    workspaceId: number
+    workspaceId: number | null
 }
 
 export const initialWSState: IWorkSpaceState = {
-    workspaceId: 0
+    workspaceId: null
 }
 
 export const WorkSpaceReducer = (state: IWorkSpaceState, action: WorkSpaceActionType) => {
     switch (action.type) {
         case 'SET_WORKSPACE':
-            return { ...state, workspaceId: {...action.payload} }
+            return { ...state, workspaceId: action.payload }
         default:
             return state
     }

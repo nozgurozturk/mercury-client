@@ -6,7 +6,7 @@ import { AuthReducer, initialAuthState } from './utils/reducer/AuthReducer'
 import {ThemeContext} from './utils/context/ThemeContext'
 import {ThemeReducer, initialThemeState} from './utils/reducer/ThemeReducer'
 import {WorkSpaceContext} from './utils/context/WorkSpaceContext'
-import { WorkSpaceReducer, initialWSState } from './utils/reducer/WorkspaceReducer';
+import { WorkSpaceReducer, initialWSState } from './utils/reducer/WorkSpaceReducer';
 // Containers and Components
 import { Login } from "./containers/Auth/Login"
 import {Home} from './containers/Home'
@@ -84,7 +84,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme.theme}>
         <AuthContext.Provider value={{ state, dispatch }}>
           <>{!state.authenticated ? <Login /> : 
-          <WorkSpaceContext.Provider value={{ state, dispatch }}>
+          <WorkSpaceContext.Provider value={{ workspace, workspaceDispatch }}>
             <Home/>
           </WorkSpaceContext.Provider>
           

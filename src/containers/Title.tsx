@@ -13,7 +13,6 @@ export const Title: FunctionComponent = () => {
     const [name, setName] = useState<string>('');
 
     const getUser = async () => {
-        const id: any = parseInt(localStorage.getItem('user')!)
         const token: any = 'Bearer ' + localStorage.getItem('token')!.toString().replace(/"/g, "")
         try {
             let myHeaders = new Headers({
@@ -21,7 +20,7 @@ export const Title: FunctionComponent = () => {
                 "Content-Type": "application/json"
             });
             const response = await fetch(
-                `http://localhost:8080/user/${id}`,
+                `http://localhost:8080/user`,
                 {
                     headers: myHeaders,
                     method: "GET",

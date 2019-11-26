@@ -1,5 +1,5 @@
 import React from 'react'
-import {IWorkSpaceState} from '../reducer/WorkspaceReducer'
+import {IWorkSpaceState} from '../reducer/WorkSpaceReducer'
 
 export type WorkSpaceContextProps = {
     workspace : IWorkSpaceState
